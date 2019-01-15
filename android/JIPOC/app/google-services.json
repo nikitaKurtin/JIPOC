@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "578765301424",
+    "firebase_url": "https://jipoc-1dc20.firebaseio.com",
+    "project_id": "jipoc-1dc20",
+    "storage_bucket": "jipoc-1dc20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578765301424:android:3d5ccd1c362e481e",
+        "android_client_info": {
+          "package_name": "kurtin.nikita.jipoc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "578765301424-va4q09tc8jtj2tpfdvomfbbve4ki66rt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyfLk4ctDhrktz9zKfYxTl-WoGg47y4zw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- RelativeLayout instead of ConstraintLayout for better performance -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/startChatBtn"
+        android:layout_alignParentStart="true"
+        android:text="@string/start_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="openChat"
+        />
+
+    <Button
+        android:id="@+id/joinChatBtn"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/join_chat"
+        android:onClick="openChat"
+        />
+
+    <Button
+        android:id="@+id/closeChatBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/close_chat"
+        android:visibility="gone"
+        android:onClick="toggleChat"
+        />
+
+    <Button
+        android:id="@+id/sendBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send"
+        android:onClick="sendMsg"
+        />
+
+    <EditText
+        android:id="@+id/inputMsg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@id/sendBtn"
+        android:layout_alignParentBottom="true"
+        android:hint="@string/type_a_message"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/messagesList"
+        android:layout_below="@id/closeChatBtn"
+        android:visibility="gone"
+        android:layout_above="@id/inputMsg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>
