@@ -64,7 +64,6 @@ public class MainActivity extends CoreActivity {
     protected void onStart() {
         super.onStart();
 
-
     }
 
     @Override
@@ -121,9 +120,6 @@ public class MainActivity extends CoreActivity {
             DataSnapshot chat = dataSnapshot.child(Crypto.sha256(fullKey));
             if(chat.hasChild(FBHelper.Keys.MSGS)){
                 msgEnc = chat.child(FBHelper.Keys.MSGS).getValue(String.class);//Store encrypted copy
-                System.out.println("Fullkey: "+fullKey);
-                System.out.println("IV: "+iv);
-                System.out.println("msgEnc: "+msgEnc);
                 messages = FBHelper.parseMessages(uid, Crypto.decryptAes(fullKey, iv, msgEnc));
                 updateScreen();
             }
