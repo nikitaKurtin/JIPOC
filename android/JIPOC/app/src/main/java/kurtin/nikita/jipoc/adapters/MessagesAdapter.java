@@ -34,7 +34,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MsgVie
     public void onBindViewHolder(@NonNull MsgViewHolder msgViewHolder, int i) {
         Message msg = getMessage(i);
         View msgView = msgViewHolder.msgView;
-        msgView.setBackgroundColor(msg.isThisUser() ? Color.GREEN: Color.GRAY);
+        //msgView.setBackgroundColor(msg.isThisUser() ? Color.GREEN: Color.GRAY);
         ((TextView)msgView).setText(msg.getText());
     }
 

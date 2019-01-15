@@ -20,7 +20,7 @@ public class KeyManager {
 
     //Not all chars (ASCII or Unicode) are string representable, therefor I use my own chars collection
     //If you aren't sure why I chose only: '<', '>', '?', '!' '+' '@', '*', '%' ,'$' - ask me directly
-    private static final String CHARS = "<>?!+@*%$0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private static final String CHARS = "<>?!+@*%$0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
     //Generate random String key for given length
     public static String generateHalfKey(){
