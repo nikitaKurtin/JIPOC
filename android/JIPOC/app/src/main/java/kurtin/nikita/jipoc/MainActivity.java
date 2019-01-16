@@ -1,9 +1,11 @@
 package kurtin.nikita.jipoc;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,7 +38,7 @@ import kurtin.nikita.jipoc.utils.HttpRequest;
 import kurtin.nikita.jipoc.utils.KeyManager;
 import kurtin.nikita.jipoc.utils.RestManager;
 
-public class MainActivity extends CoreActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static String fullKey;
     private static String iv;
@@ -51,6 +53,8 @@ public class MainActivity extends CoreActivity {
     private RecyclerView messagesList;
     private EditText inputMsg;
     private Button sendBtn;
+
+    private Context self = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +72,7 @@ public class MainActivity extends CoreActivity {
 
         db = FirebaseDatabase.getInstance().getReference(FBHelper.Keys.PATH);
 
-        
+
     }
 
     @Override
