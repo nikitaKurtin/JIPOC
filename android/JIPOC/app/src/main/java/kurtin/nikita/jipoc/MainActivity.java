@@ -218,6 +218,9 @@ public class MainActivity extends AppCompatActivity {
     private void destroyChat(final String uid){
         chatOn = false;
         toggleChatView();
+        MainActivity.uid = "";
+        MainActivity.fullKey = "";
+        MainActivity.iv = "";
         if(uid.startsWith("s")){
            try {
                JSONObject request = new JSONObject().put(KeyManager.randomChars(4), KeyManager.randomChars(4));
