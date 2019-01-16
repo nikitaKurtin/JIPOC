@@ -16,11 +16,15 @@ public class Alert {
     }
 
     public static void dialog(Context context, String ttl){
-        new AlertDialog.Builder(context).setTitle(ttl).setPositiveButton(R.string.ok, null).show();
+        dialog(context, ttl, null);
     }
 
     public static void dialog(Context context, String ttl, String msg){
-        new AlertDialog.Builder(context).setTitle(ttl).setMessage(msg).setPositiveButton(R.string.ok, null).show();
+        dialog(context, ttl, msg, null);
+    }
+
+    public static void dialog(Context context, String ttl, String msg, AlertDialog.OnClickListener okHandler){
+        new AlertDialog.Builder(context).setTitle(ttl).setMessage(msg).setPositiveButton(R.string.ok, okHandler).show();
     }
 
 }

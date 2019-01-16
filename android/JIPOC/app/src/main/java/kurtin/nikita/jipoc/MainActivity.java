@@ -105,8 +105,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.closeChat){
-            if(chatOn)destroyChat(uid);
-            else Alert.toast(self, "Nothing to close");
+            if(chatOn){
+                Alert.dialog(self, "Are you sure?", "If you close the chat, you won't be able to go back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        destroyChat(uid);
+                    }
+                });
+            }else{
+                Alert.toast(self, "Nothing to close");
+            }
         }
         return true;
     }
@@ -215,20 +223,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void destroyChat(final String uid){
-        chatOn = false;
-        toggleChatView();
+    private void clearAllData(){
         MainActivity.uid = "";
         MainActivity.fullKey = "";
         MainActivity.iv = "";
+        msgEnc = "";
+        messages.clear();
+    }
+
+    private void destroyChat(final String uid){
+        chatOn = false;
+        toggleChatView();
+        clearAllData();
         if(uid.startsWith("s")){
            try {
                JSONObject request = new JSONObject().put(KeyManager.randomChars(4), KeyManager.randomChars(4));
                new RestManager.HttpTask(FBHelper.Keys.CHATS_URL, HttpRequest.Method.PUT, new RestManager.ResponseHandler() {
                    @Override
                    public void handle(JSONObject response) {
-                       msgEnc = "";
-                       messages.clear();
                        updateScreen();
                        Alert.toast(self, "Chat Deleted");
                    }
