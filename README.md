@@ -19,9 +19,10 @@ When the chat is created it generates a random `IV` [Initialization Vector](http
 **Note** `SHA256` cannot be reversed and since it's created from 16 random chars, it's immune for brute force attack as well. 
 
 6. After both users open the chat, they both have the relevant `IV` and the `Private Key`. Each one now can send a message.
-7. Chat communication uses `EE2E` [End To End Encryption](https://en.wikipedia.org/wiki/End-to-end_encryption) based on `CBC` [Cypher Block Chaining](Cipher_Block_Chaining_.28CBC.29) algorithm with `PKCS#7` [Public Key Cipher Standard](https://en.wikipedia.org/wiki/PKCS) padding for symmetric encryption.
-8. To make the chat look nice, the messages are displayed in bubbles (idea from telegram and whatsup) separated by color.
-9. For realtime communication I used `Firebase` cloud platform.
+7. When users close the chat all the data is destroyed.
+8. Chat communication uses `EE2E` [End To End Encryption](https://en.wikipedia.org/wiki/End-to-end_encryption) based on `CBC` [Cypher Block Chaining](Cipher_Block_Chaining_.28CBC.29) algorithm with `PKCS#7` [Public Key Cipher Standard](https://en.wikipedia.org/wiki/PKCS) padding for symmetric encryption.
+9. To make the chat look nice, the messages are displayed in bubbles (idea from telegram and whatsup) separated by color.
+10. For realtime communication I used `Firebase` cloud platform.
 
 ## Code design
 
