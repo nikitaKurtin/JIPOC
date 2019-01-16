@@ -4,7 +4,7 @@ Job Interview Proof Of Concept
 ## Main Challenges
 1. Creating realtime chat system with End To End Encryption (like telegram or whatsup).
 2. Key exchange without expose to MItM attack.
-3. Completely anonymous - Authentication without identification.
+3. Completely anonymous - Authentication without identification (unlike telegram or whatsup).
 
 ## Application flow
 1. First user (initiator) starts the chat - the app generates `first key` (8 random chars)
