@@ -26,4 +26,9 @@ public final class Message {
     public String getUid() {
         return uid;
     }
+
+    @Override
+    public String toString() {
+        return uid+":"+text;
+    }
 }

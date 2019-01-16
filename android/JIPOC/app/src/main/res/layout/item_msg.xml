@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-</RelativeLayout>
+    android:layout_height="wrap_content"
+    android:textSize="@dimen/medTxt"
+    android:gravity="center_vertical"
+    android:paddingEnd="@dimen/bigPadding"
+    android:paddingStart="@dimen/bubbleArrowPadding"
+    android:layout_marginTop="@dimen/bigPadding"
+    android:layout_marginEnd="@dimen/bigPadding"
+    android:layout_marginStart="@dimen/bigPadding"
+    />

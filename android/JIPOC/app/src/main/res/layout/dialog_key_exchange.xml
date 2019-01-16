@@ -8,7 +8,7 @@
     <TextView
         android:id="@+id/ttl"
         android:layout_alignParentStart="true"
-        style="@style/customTxtStyle"
+        style="@style/customTxt"
         android:layout_width="wrap_content"
         android:text="@string/your_key"
         />
@@ -16,7 +16,7 @@
     <TextView
         android:id="@+id/randKey"
         android:layout_toEndOf="@id/ttl"
-        style="@style/customTxtStyle"
+        style="@style/customTxt"
         android:textStyle="bold"
         android:paddingStart="@dimen/bigPadding"
         />
@@ -24,7 +24,7 @@
     <EditText
         android:id="@+id/inputKey"
         android:layout_below="@id/randKey"
-        style="@style/customTxtStyle"
+        style="@style/customTxt"
         android:layout_width="match_parent"
         android:hint="@string/key_of_your_peer"
         />

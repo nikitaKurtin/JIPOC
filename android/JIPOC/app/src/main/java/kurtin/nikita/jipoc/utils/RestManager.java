@@ -47,9 +47,7 @@ public class RestManager {
 
         @Override
         protected void onPostExecute(JSONObject json) {
-            if(json != null){
-                handler.handle(json);
-            }
+            handler.handle(json);
         }
     }
 

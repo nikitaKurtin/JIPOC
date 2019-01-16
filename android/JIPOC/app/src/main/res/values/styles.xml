@@ -8,11 +8,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="customTxtStyle">
+    <style name="customTxt">
         <item name="android:textSize">@dimen/medTxt</item>
         <item name="android:padding">@dimen/smallPadding</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="customBtn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/bigPadding</item>
+        <item name="android:background">@drawable/bg_btn</item>
+        <item name="android:textColor">@color/lightGray</item>
     </style>
 
     <dimen name="smallTxt">16sp</dimen>
@@ -21,5 +29,9 @@
 
     <dimen name="smallPadding">2sp</dimen>
     <dimen name="bigPadding">8sp</dimen>
+
+    <dimen name="bubbleArrowPadding">20dp</dimen>
+
+    <dimen name="midBtn">32dp</dimen>
 
 </resources>

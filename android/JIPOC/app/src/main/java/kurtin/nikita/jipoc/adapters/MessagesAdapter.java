@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import kurtin.nikita.jipoc.R;
 import kurtin.nikita.jipoc.models.Message;
 
 /**
@@ -34,14 +35,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MsgVie
     public void onBindViewHolder(@NonNull MsgViewHolder msgViewHolder, int i) {
         Message msg = getMessage(i);
         View msgView = msgViewHolder.msgView;
-        //msgView.setBackgroundColor(msg.isThisUser() ? Color.GREEN: Color.GRAY);
+        msgView.setBackgroundResource(msg.isThisUser() ? R.drawable.incoming_bubble: R.drawable.outgoing_bubble);
         ((TextView)msgView).setText(msg.getText());
     }
 
     @NonNull
     @Override
     public MsgViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View msgView = LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, viewGroup, false);
+        View msgView = LayoutInflater.from(context).inflate(R.layout.item_msg, viewGroup, false);
 
         return new MsgViewHolder(msgView);
     }

@@ -7,8 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -43,65 +46,46 @@ public class MainActivity extends CoreActivity {
 
     private List<Message> messages = new ArrayList<>();
     private String msgEnc = "";
+    private boolean chatOn;
 
     private RecyclerView messagesList;
     private EditText inputMsg;
+    private Button sendBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        inputMsg = findViewById(R.id.inputMsg);
+        sendBtn      = findViewById(R.id.sendBtn);
+        inputMsg     = findViewById(R.id.inputMsg);
         messagesList = findViewById(R.id.messagesList);
-        messagesList.setLayoutManager(new LinearLayoutManager(self));
+
+
+        LinearLayoutManager llm =  new LinearLayoutManager(self);
+        llm.setReverseLayout(true);
+        messagesList.setLayoutManager(llm);
 
         db = FirebaseDatabase.getInstance().getReference(FBHelper.Keys.PATH);
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
+        
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        //Stop listening when screen disappears
+        //Stop listening when screen closed
         db.removeEventListener(dataChanged);
     }
 
-    public void sendMsg(View v){
-        String msg = inputMsg.getText().toString();
-        if(validMsg(msg)){
-            //Update encrypted messages
-            msgEnc = Crypto.encryptAes(fullKey, iv, FBHelper.stringify(messages)+FBHelper.stringify(uid, msg));
-            initChat(fullKey, uid);
-            inputMsg.setText("");
-        }
-    }
-
     public void openChat(View v){
-        boolean isStart       = (v.getId() == R.id.startChatBtn);
-        String halfKey        = KeyManager.generateHalfKey();
-        final View dialogView = LayoutInflater.from(self).inflate(R.layout.dialog_key_exchange, null);
+        boolean isStart = (R.id.startChatBtn == v.getId());
+        String halfKey  = KeyManager.generateHalfKey();
+        View dialogView = LayoutInflater.from(self).inflate(R.layout.dialog_key_exchange, null);
 
         ((TextView)dialogView.findViewById(R.id.randKey)).setText(halfKey);
         openChat(isStart, dialogView, halfKey);
-        toggleChat(v);
-    }
-
-    public void toggleChat(View v){
-        boolean closeChat = (v.getId() == R.id.closeChatBtn);
-
-        if(closeChat)destroyChat(uid);
-
-        findViewById(R.id.closeChatBtn).setVisibility(closeChat ? View.GONE : View.VISIBLE);
-        findViewById(R.id.startChatBtn).setVisibility(closeChat ? View.VISIBLE : View.GONE);
-        findViewById(R.id.joinChatBtn).setVisibility(closeChat ? View.VISIBLE : View.GONE);
     }
 
     public void updateScreen(){
@@ -113,6 +97,34 @@ public class MainActivity extends CoreActivity {
             }
         });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.closeChat){
+            if(chatOn)destroyChat(uid);
+            else Alert.toast(self, "Nothing to close");
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.edit_chat, menu);
+        return true;
+    }
+
+    private View.OnClickListener sendMsg = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            String msg = inputMsg.getText().toString();
+            if(validMsg(msg)){
+                //Update encrypted messages
+                msgEnc = Crypto.encryptAes(fullKey, iv, FBHelper.stringify(uid, msg)+FBHelper.stringify(messages));
+                initChat(fullKey, uid);
+                inputMsg.setText("");
+            }
+        }
+    };
 
     private ValueEventListener dataChanged = new ValueEventListener(){
         @Override
@@ -152,12 +164,19 @@ public class MainActivity extends CoreActivity {
         }).show();
     }
 
-    private void handleChat(String iv, String fullKey, String uid){
+    private void openChat(String iv, String fullKey, String uid){
+        //Set data for chat
         MainActivity.iv      = iv;
         MainActivity.fullKey = fullKey;
         MainActivity.uid     = uid;
+
         //Start listening when chat is created
         db.addValueEventListener(dataChanged);
+        sendBtn.setOnClickListener(sendMsg);
+
+        //Show relevant views
+        chatOn = true;
+        toggleChatView();
     }
 
     private void joinChat(final String fullKey, final String uid){
@@ -166,7 +185,11 @@ public class MainActivity extends CoreActivity {
         new RestManager.HttpTask(chatUrl, HttpRequest.Method.GET, new RestManager.ResponseHandler(){
             @Override
             public void handle(JSONObject response) {
-                handleChat(response.optString(FBHelper.Keys.IV), fullKey, uid);
+                if(response == null){
+                    Alert.dialog(self, "Failed to join", "Please try again");
+                }else{
+                    openChat(response.optString(FBHelper.Keys.IV), fullKey, uid);
+                }
             }
         }).execute();
     }
@@ -180,7 +203,7 @@ public class MainActivity extends CoreActivity {
             new RestManager.HttpTask(FBHelper.Keys.CHATS_URL, HttpRequest.Method.PUT, new RestManager.ResponseHandler(){
                 @Override
                 public void handle(JSONObject response) {
-                    handleChat(newIv, fullKey, uid);
+                    openChat(newIv, fullKey, uid);
                 }
             }).execute(request.toString());
         } catch (JSONException e) {
@@ -189,6 +212,8 @@ public class MainActivity extends CoreActivity {
     }
 
     private void destroyChat(final String uid){
+        chatOn = false;
+        toggleChatView();
         if(uid.startsWith("s")){
            try {
                JSONObject request = new JSONObject().put(KeyManager.randomChars(4), KeyManager.randomChars(4));
@@ -203,6 +228,14 @@ public class MainActivity extends CoreActivity {
                }).execute(request.toString());
            }catch (JSONException e){}
         }
+    }
+
+    private void toggleChatView(){
+        sendBtn.setVisibility(chatOn ? View.VISIBLE : View.GONE);
+        inputMsg.setVisibility(chatOn ? View.VISIBLE : View.GONE);
+        messagesList.setVisibility(chatOn ? View.VISIBLE : View.GONE);
+        findViewById(R.id.startChatBtn).setVisibility(chatOn ? View.GONE : View.VISIBLE);
+        findViewById(R.id.joinChatBtn).setVisibility(chatOn ? View.GONE : View.VISIBLE);
     }
 
     private boolean validKey(String givenKey){

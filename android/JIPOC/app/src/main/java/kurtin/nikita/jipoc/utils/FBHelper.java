@@ -1,6 +1,7 @@
 package kurtin.nikita.jipoc.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import kurtin.nikita.jipoc.models.Message;
@@ -27,7 +28,7 @@ public class FBHelper {
         for(String msg : msgs){
             if(msg.contains(Keys.inner)){
                 String [] msgData = msg.split(Keys.inner);
-                messages.add(new Message(uid, msgData[1], uid.equals(msgData[0])));
+                messages.add(new Message(msgData[0], msgData[1], msgData[0].equals(uid)));
             }
         }
         return messages;
